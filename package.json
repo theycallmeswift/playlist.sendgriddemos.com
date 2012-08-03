@@ -1,6 +1,6 @@
 {
   "name": "playlist.sendgriddemos",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Social DJing via email",
   "main": "server.js",
   "scripts": {
