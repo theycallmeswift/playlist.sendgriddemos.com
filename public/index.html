@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Demo</title>
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/app.css">
+  </head>
+  <body>
+    <div class="row" id="header">
+      <h1>Now Playing</h1>
+      <div class="six columns">
+        <div class="row display" id="now-playing">
+          <div class="four mobile-one columns">
+            <div id="art"><img src="http://www.gravatar.com/avatar/10831877bd394c902f1dda20524c86d6.jpg?s=100&d=retro" alt="$" /></div>
+          </div>
+          <div class="eight mobile-three columns end">
+            <h3 id="track">Email Playlist</h3>
+            <h4 class="subheader" id="artist">A <a href="http://sendgrid.com">SendGrid</a> hack by <a href="http://twitter.com/SwiftAlphaOne">Swift</a></h4>
+          </div>
+        </div>
+      </div>
+      <div class="six columns" id="author">
+        <h4>Email your song requests to:</h4>
+        <h2><a href="mailto:playlist@sendgriddemos.com">playlist@sendgriddemos.com</a></h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <h1>The Queue</h1>
+        <br />
+        <div id="queue"> </div>
+      </div>
+    </div>
+    <div id="api"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/js/jquery.rdio.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(document).ready(function() {
+        var socket = io.connect('/')
+          , playing = false;
+
+        socket.on('token', function(token) {
+          $("#api").rdio(token);
+        });
+
+        $("#api").on('ready.rdio', function(event) {
+          socket.on('queue', function(data) {
+            $("#queue").append('<div class="request"><h2>'+data.name+'</h2> <h4 class="subheader">was requested by '+data.user+'</h4></div>');
+            if(playing) {
+              $("#api").rdio().queue(data.track);
+            } else {
+              $("#api").rdio().play(data.track);
+              playing = true;
+            }
+          });
+        });
+
+      $('#api').bind('playingTrackChanged.rdio', function(e, track, pos) {
+          if(track) {
+            $("#art").html("<img src='"+track.icon+"' />");
+            $("#track").html(track.name);
+            $("#artist").html(track.artist);
+
+            if($("#queue .request:first h2").html() == track.name) { $("#queue .request:first").remove(); }
+          } else {
+            playing = false;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

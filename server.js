@@ -1,9 +1,8 @@
 var express = require('express')
   , app = express.createServer()
-  , config = require('./config.json')
+  , io = require('socket.io').listen(app)
   , helpers = require('./helpers.js')
-  , Rdio = require('rdio-node').Rdio
-  , playbackToken;
+  , Rdio = require('rdio-node').Rdio;
 
 app.configure(function() {
   app.use(express.bodyParser());
@@ -12,20 +11,26 @@ app.configure(function() {
 
 // Create a new instance
 var r = new Rdio({
-  consumerKey: config.Rdio.key,
-  consumerSecret: config.Rdio.secret
+  consumerKey: (process.env.RDIO_KEY || 'your_rdio_key'),
+  consumerSecret: (process.env.RDIO_SECRET || 'your_rdio_secret')
 });
 
 app.post('/email', function(req,res) {
-  console.log(req.body.subject);
-
   helpers.getTrack(r, req.body.subject, function(err, track) {
-    console.log(track);
-    res.end();
+    track.user = helpers.getUsername(req.body.from);
+    if(!err && track) {
+      io.sockets.emit('queue', track);
+    }
   });
+  res.end();
 });
 
-helpers.getPlaybackToken(r, 'localhost', function(err, token) {
-  playbackToken = token;
+helpers.getPlaybackToken(r, 'playlist.sendgriddemos.com', function(err, token) {
+  if(err) { throw JSON.stringify(err); }
+
+  io.sockets.on('connection', function(socket) {
+    socket.emit('token', token);
+  });
+
   app.listen(3000);
 });

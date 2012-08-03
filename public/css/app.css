@@ -1,0 +1,39 @@
+#header {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #000;
+}
+
+#now-playing {
+  padding: 15px 0;
+  background: #e5e5e5; /* Old browsers */
+  border-radius: 5px;
+}
+
+#author img {
+  width: 50px;
+  border: 1px solid #000;
+}
+
+#art img {
+  border: 4px solid #343434;
+  border-radius: 5px;
+}
+
+#track {
+  color: #C0595D;
+  margin-bottom: 5px;
+}
+
+#artist {
+  color: #3F3D42;
+  margin-top: 5px;
+}
+
+#queue .request {
+  margin-bottom: 10px;
+}
+
+#queue .request h2, #queue .request h4 {
+  display: inline-block;
+  padding-right: 20px;
+}
