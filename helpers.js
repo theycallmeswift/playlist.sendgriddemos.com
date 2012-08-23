@@ -1,3 +1,12 @@
+/* getTrack
+ *
+ * Search the Rdio API for a track with a given title.  Calls the callback
+ * with the track ID, track name, and artist.
+ *
+ * @param   r       Rdio Object
+ * @param   title   Title of the song
+ * @param   cb      callback (err, result object)
+ */
 function getTrack(r, title, cb) {
   r.makeRequest('search', {query: title, types: 'Track'}, function(err, body) {
     if(err) { return cb(err); }
@@ -11,6 +20,14 @@ function getTrack(r, title, cb) {
   });
 }
 
+/* getPlaybackToken
+ *
+ * Returns a playback token to use with the Rdio embeded player.
+ *
+ * @param   r        Rdio Object
+ * @param   domain   Domain for the app
+ * @param   cb       callback (err, token)
+ */
 function getPlaybackToken(r, domain, cb) {
   r.makeRequest('getPlaybackToken', {domain: domain}, function(err, body) {
     if(err) { return cb(err); }
@@ -19,7 +36,15 @@ function getPlaybackToken(r, domain, cb) {
   });
 }
 
-function getUsername(email) {
+/* getUsernameFromEmail
+ *
+ * Pulls out everything up to the '@' sign of an email address and returns it.
+ * Ex. 'swift@sendgrid.com' -> 'swift'
+ *
+ * @param   email   Email to extract username from
+ * @return  String
+ */
+function getUsernameFromEmail(email) {
   var tokens = email.match(/([a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,4})/gi);
   return tokens[0].match(/^(.*)@(.*)$/)[1];
 }
@@ -27,5 +52,5 @@ function getUsername(email) {
 module.exports = {
   getTrack: getTrack,
   getPlaybackToken: getPlaybackToken,
-  getUsername: getUsername
+  getUsernameFromEmail: getUsernameFromEmail
 };

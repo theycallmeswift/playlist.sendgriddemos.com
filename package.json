@@ -1,7 +1,12 @@
 {
   "name": "playlist.sendgriddemos",
-  "version": "0.0.2",
-  "description": "Social DJing via email",
+  "version": "0.0.3",
+  "subdomain": "playlist.sendgriddemos",
+  "domains": [
+    "playlist.sendgriddemos.com",
+    "www.playlist.sendgriddemos.com"
+  ],
+  "description": "Social DJing via email with SendGrid",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,17 +18,13 @@
     "Rdio"
   ],
   "author": "Swift <swift@sendgrid.com>",
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
     "express": "2.5.9",
     "rdio-node": "git://github.com/monsur/rdio-node.git",
-    "socket.io": "~0.9.8"
+    "socket.io": "~0.9.8",
+    "sendgrid": "0.2.x"
   },
-  "subdomain": "playlist.sendgriddemos",
-  "domains": [
-    "playlist.sendgriddemos.com",
-    "www.playlist.sendgriddemos.com"
-  ],
   "engines": {
     "node": "0.6.x"
   }
