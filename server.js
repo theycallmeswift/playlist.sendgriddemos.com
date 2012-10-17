@@ -9,6 +9,7 @@
 // Dependencies
 var express = require('express')
   , app = express.createServer()
+  , port = process.env.PORT || 3000
   , io = require('socket.io').listen(app)
   , helpers = require('./helpers.js')
   , Rdio = require('rdio-node').Rdio
@@ -70,5 +71,5 @@ helpers.getPlaybackToken(r, 'playlist.sendgriddemos.com', function(err, token) {
     socket.emit('token', token);
   });
 
-  app.listen(3000);
+  app.listen(port);
 });
