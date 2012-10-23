@@ -10,6 +10,7 @@
 var express = require('express')
   , app = express.createServer()
   , port = process.env.PORT || 3000
+  , domain = process.env.DOMAIN || 'localhost'
   , io = require('socket.io').listen(app)
   , helpers = require('./helpers.js')
   , Rdio = require('rdio-node').Rdio
@@ -63,12 +64,12 @@ app.post('/email', function(req,res) {
 });
 
 // Get a playback token that we can use to play songs from Rdio
-helpers.getPlaybackToken(r, 'playlist.sendgriddemos.com', function(err, token) {
+helpers.getPlaybackToken(r, domain, function(err, token) {
   if(err) { throw JSON.stringify(err); }
 
   // Whenever we get a new connection, send the token to the client
   io.sockets.on('connection', function(socket) {
-    socket.emit('token', token);
+    socket.emit('token', token, domain);
   });
 
   app.listen(port);
