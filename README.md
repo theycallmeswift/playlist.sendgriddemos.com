@@ -61,7 +61,7 @@ or set them as environment variables on Nodejitsu using the following command
 
     jitsu env set VARIABLE_NAME VALUE
 
-The variables you'll need to set are `SENDGRID_USER`, `SENDGRID_PASS`, `RDIO_KEY`, and `RDIO_SECRET`.
+The variables you'll need to set are `DOMAIN`, `SENDGRID_USER`, `SENDGRID_PASS`, `RDIO_KEY`, and `RDIO_SECRET`.
 
 ### 3. Deploy
 
