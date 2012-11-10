@@ -45,8 +45,8 @@ function getPlaybackToken(r, domain, cb) {
  * @return  String
  */
 function getUsernameFromEmail(email) {
-  var tokens = email.match(/([a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,4})/gi);
-  return tokens[0].match(/^(.*)@(.*)$/)[1];
+  console.log(email);
+  return email.match(/^(.*)@(.*)$/)[1];
 }
 
 module.exports = {
