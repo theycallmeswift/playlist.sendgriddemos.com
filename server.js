@@ -38,6 +38,7 @@ r = new Rdio({
 
 // Listen for posts to '/email' from sendgrid
 app.post('/email', function(req,res) {
+  console.log(req.body);
   var from = JSON.parse(req.body.envelope).from;
 
   // Look up the track on Rdio and emit an event
