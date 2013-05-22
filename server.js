@@ -10,6 +10,7 @@
 var express = require('express')
   , app = express.createServer()
   , port = process.env.PORT || 3000
+  , pollingOnly = process.env.XHR_POLLING_ONLY || false
   , domain = process.env.DOMAIN || 'localhost'
   , io = require('socket.io').listen(app)
   , helpers = require('./helpers.js')
@@ -23,6 +24,14 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.static(__dirname + '/public'));
 });
+
+// Don't use Socket.io's WS support if flag is set
+if(pollingOnly) {
+  console.log("Alert: Polling disabled");
+  io.configure(function() {
+    io.set("transports", ["xhr-polling"]);
+  });
+}
 
 // Create a new SendGrid object
 sendgrid = new SendGrid(
