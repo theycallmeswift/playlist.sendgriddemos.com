@@ -22,7 +22,7 @@
   "dependencies": {
     "express": "2.5.9",
     "rdio-node": "git://github.com/monsur/rdio-node.git",
-    "socket.io": "~0.9.8",
+    "socket.io": "0.9.8",
     "sendgrid": "0.2.x"
   },
   "engines": {
